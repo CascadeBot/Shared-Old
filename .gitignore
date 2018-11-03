@@ -1,0 +1,16 @@
+.idea/
+
+### Java ###
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.zip
+*.tar.gz
+
+target/
+*.yml
