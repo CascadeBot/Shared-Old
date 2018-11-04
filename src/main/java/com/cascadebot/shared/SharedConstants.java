@@ -8,6 +8,4 @@ public final class SharedConstants {
 
     public static final String GITHUB_URL = "https://github.com/CascadeBot/CascadeBot";
 
-    public static final long OFFICIAL_SERVER_ID = 488394590458478602L;
-
 }
