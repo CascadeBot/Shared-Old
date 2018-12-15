@@ -6,8 +6,13 @@
 package com.cascadebot.shared;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class Version implements Comparable<Version> {
+
+    // https://regex101.com/r/26OhDd/1
+    private static final Pattern VERSION_REGEX = Pattern.compile("^([0-9]+)(?:(?:\\.)([0-9]+))?(?:(?:\\.)([0-9]+))?$");
 
     private int major;
     private int minor;
@@ -21,6 +26,26 @@ public final class Version implements Comparable<Version> {
 
     public static Version of(int major, int minor, int patch) {
         return new Version(Math.abs(major), Math.abs(minor), Math.abs(patch));
+    }
+
+    public static Version of(int major, int minor) {
+        return new Version(Math.abs(major), Math.abs(minor), 0);
+    }
+
+    public static Version of(int major) {
+        return new Version(Math.abs(major), 0, 0);
+    }
+
+    public static Version parseVer(String verToParse) {
+        Matcher matcher = VERSION_REGEX.matcher(verToParse);
+        if (matcher.matches()) {
+            int major = matcher.group(1) == null ? 0 : Integer.parseInt(matcher.group(1));
+            int minor = matcher.group(2) == null ? 0 : Integer.parseInt(matcher.group(2));
+            int patch = matcher.group(3) == null ? 0 : Integer.parseInt(matcher.group(3));
+            return new Version(major, minor, patch);
+        } else {
+            throw new IllegalArgumentException("Version is in the wrong format! Expected: 1.2.3 Actual: " + verToParse);
+        }
     }
 
     @Override
