@@ -6,7 +6,7 @@
 
     <groupId>com.cascadebot</groupId>
     <artifactId>shared</artifactId>
-    <version>1.8</version>
+    <version>1.8.1</version>
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -24,5 +24,13 @@
         </plugins>
     </build>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+    </dependencies>
 
 </project>
