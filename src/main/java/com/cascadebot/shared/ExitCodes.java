@@ -2,6 +2,7 @@ package com.cascadebot.shared;
 
 public final class ExitCodes {
 
+    public static final int STOP_WRAPPER = 19;
     public static final int STOP = 20;
     public static final int UPDATE = 21;
     public static final int RESTART = 22;
