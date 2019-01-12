@@ -6,7 +6,7 @@
 
     <groupId>com.cascadebot</groupId>
     <artifactId>shared</artifactId>
-    <version>1.8.3</version>
+    <version>1.8.4</version>
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
