@@ -13,4 +13,7 @@ public final class SharedConstants {
 
     public static final String GITHUB_URL = "https://github.com/CascadeBot/CascadeBot";
 
+    public static final String WRAPPER_OP_PREFIX = "wrapperop";
+    public static final String BOT_OP_PREFIX = "botop";
+
 }
