@@ -5,9 +5,6 @@
 
 package com.cascadebot.shared;
 
-import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonProperty;
-
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,6 +20,7 @@ public final class Version implements Comparable<Version> {
 
     private String build;
 
+    private Version() {} // This is for mongodb object serialisation
 
     private Version(int major, int minor, int patch, String build) {
         this.major = major;
@@ -31,11 +29,7 @@ public final class Version implements Comparable<Version> {
         this.build = build == null ? null : build.toUpperCase();
     }
 
-    @BsonCreator
-    public static Version of(@BsonProperty("major") int major,
-                             @BsonProperty("minor") int minor,
-                             @BsonProperty("patch") int patch,
-                             @BsonProperty("build") String build) {
+    public static Version of(int major, int minor, int patch, String build) {
         if (build != null) {
             if (!Regex.POSITIVE_INTEGER_REGEX.matcher(build).matches() || !build.equalsIgnoreCase("dev")) {
                 throw new IllegalArgumentException("Build is in the wrong format! Must be a number or dev!");
