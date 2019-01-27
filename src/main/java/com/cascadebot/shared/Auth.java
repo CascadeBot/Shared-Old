@@ -18,35 +18,35 @@ public class Auth {
     }
 
     public String hmacEncrypt(String text) {
-        text += "-" + getTime();
+        return hmacEncrypt(text, getTimeCounter());
+    }
+
+    public String hmacEncrypt(String text, Long timeCounter) {
+        text += "-" + timeCounter;
         return toHex(hmac.doFinal(text.getBytes(StandardCharsets.UTF_8)));
     }
 
     public boolean verifyEncrypt(String text, String hmacText) {
-        text += "-" + getTime();
+        return verifyEncrypt(text, hmacText, getTimeCounter());
+    }
+
+    public boolean verifyEncrypt(String text, String hmacText, Long timeCounter) {
+        text += "-" + timeCounter;
         return toHex(hmac.doFinal(text.getBytes(StandardCharsets.UTF_8))).equals(hmacText);
     }
 
-    private String getTime() {
-        return String.valueOf(System.currentTimeMillis() / TimeUnit.DAYS.toMillis(1));
+    private Long getTimeCounter() {
+        return System.currentTimeMillis() / TimeUnit.DAYS.toMillis(1);
     }
-
-    private static String digits = "0123456789abcdef";
 
     public static String toHex(byte[] data) {
-        return toHex(data, data.length);
-    }
+        StringBuilder builder = new StringBuilder(data.length * 2);
 
-    public static String toHex(byte[] data, int length) {
-        StringBuilder buf = new StringBuilder();
-
-        for(int i = 0; i != length; i++) {
-            int v = data[i] & 0xff;
-            buf.append(digits.charAt(v >> 4));
-            buf.append(digits.charAt(v & 0xf));
+        for (byte b : data) {
+            builder.append(String.format("%02x", b)); // Converts byte into hex character and appends
         }
 
-        return buf.toString();
+        return builder.toString();
 
     }
 }
