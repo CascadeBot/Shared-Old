@@ -5,6 +5,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.TimeUnit;
 
 public class Auth {
 
@@ -17,11 +18,17 @@ public class Auth {
     }
 
     public String hmacEncrypt(String text) {
+        text += "-" + getTime();
         return toHex(hmac.doFinal(text.getBytes(StandardCharsets.UTF_8)));
     }
 
     public boolean verifyEncrypt(String text, String hmacText) {
+        text += "-" + getTime();
         return toHex(hmac.doFinal(text.getBytes(StandardCharsets.UTF_8))).equals(hmacText);
+    }
+
+    private String getTime() {
+        return String.valueOf(System.currentTimeMillis() / TimeUnit.DAYS.toMillis(1));
     }
 
     private static String digits = "0123456789abcdef";
