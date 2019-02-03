@@ -12,5 +12,6 @@ public final class OpCodes {
     public static final int AUTHORISE = 2;
     public static final int WRAPPER_OPERATION = 3;
     public static final int STATUS_UPDATE = 4;
+    public static final int LOG = 5;
 
 }
