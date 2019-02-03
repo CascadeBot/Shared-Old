@@ -13,5 +13,6 @@ public final class OpCodes {
     public static final int WRAPPER_OPERATION = 3;
     public static final int STATUS_UPDATE = 4;
     public static final int LOG = 5;
+    public static final int ERROR_LOG = 6;
 
 }
