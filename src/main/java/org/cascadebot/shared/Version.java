@@ -3,7 +3,7 @@
  * Licensed under the MIT license.
  */
 
-package com.cascadebot.shared;
+package org.cascadebot.shared;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

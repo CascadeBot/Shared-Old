@@ -3,7 +3,7 @@
  * Licensed under the MIT license.
  */
 
-package com.cascadebot.shared.utils;
+package org.cascadebot.shared.utils;
 
 import org.slf4j.Logger;
 

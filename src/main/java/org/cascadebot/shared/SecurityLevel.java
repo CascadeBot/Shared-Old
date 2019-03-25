@@ -3,7 +3,7 @@
  * Licensed under the MIT license.
  */
 
-package com.cascadebot.shared;
+package org.cascadebot.shared;
 
 /**
  * Security levels defined by Role IDs or User IDs, A level can be defined by an unlimited amount of roles
