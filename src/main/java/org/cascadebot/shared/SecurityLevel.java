@@ -10,6 +10,7 @@ package org.cascadebot.shared;
  * and users. Security levels are declared in ascending order.
  */
 public enum SecurityLevel {
+    CONTRIBUTOR,
     STAFF,
     DEVELOPER,
     OWNER;

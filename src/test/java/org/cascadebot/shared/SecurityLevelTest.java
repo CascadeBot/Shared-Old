@@ -14,6 +14,7 @@ class SecurityLevelTest {
 
     @Test
     void isAuthorisedTest() {
+        assertTrue(SecurityLevel.OWNER.isAuthorised(SecurityLevel.CONTRIBUTOR));
         assertTrue(SecurityLevel.OWNER.isAuthorised(SecurityLevel.STAFF));
         assertTrue(SecurityLevel.OWNER.isAuthorised(SecurityLevel.DEVELOPER));
         assertTrue(SecurityLevel.DEVELOPER.isAuthorised(SecurityLevel.STAFF));
