@@ -5,43 +5,30 @@
 
 package org.cascadebot.shared;
 
-import javax.crypto.Mac;
+import io.jsonwebtoken.*;
+
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.TimeUnit;
 
 public class Auth {
 
-    private Mac hmac;
+    private JwtBuilder jwtEncoder;
+    private JwtParser jwtVerifier;
 
     public Auth(String key) throws NoSuchAlgorithmException, InvalidKeyException {
-        SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA512");
-        hmac = Mac.getInstance("HmacSHA512");
-        hmac.init(keySpec);
+        SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS512.getJcaName());
+        jwtEncoder = Jwts.builder().signWith(keySpec);
+        jwtVerifier = Jwts.parser().setSigningKey(keySpec);
     }
 
-    public String hmacEncrypt(String text) {
-        return hmacEncrypt(text, getTimeCounter());
+    public String encode(String subject) {
+        return jwtEncoder.setSubject(subject).compact();
     }
 
-    public String hmacEncrypt(String text, Long timeCounter) {
-        text += "-" + timeCounter;
-        return toHex(hmac.doFinal(text.getBytes(StandardCharsets.UTF_8)));
-    }
-
-    public boolean verifyEncrypt(String text, String hmacText) {
-        return verifyEncrypt(text, hmacText, getTimeCounter());
-    }
-
-    public boolean verifyEncrypt(String text, String hmacText, Long timeCounter) {
-        text += "-" + timeCounter;
-        return toHex(hmac.doFinal(text.getBytes(StandardCharsets.UTF_8))).equals(hmacText);
-    }
-
-    private Long getTimeCounter() {
-        return System.currentTimeMillis() / TimeUnit.DAYS.toMillis(1);
+    public boolean verify(String encoded, String subject) {
+        return jwtVerifier.parseClaimsJws(encoded).getBody().getSubject().equals(subject);
     }
 
     public static String toHex(byte[] data) {
