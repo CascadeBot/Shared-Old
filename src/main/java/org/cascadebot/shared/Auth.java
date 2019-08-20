@@ -5,10 +5,7 @@
 
 package org.cascadebot.shared;
 
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -30,8 +27,18 @@ public class Auth {
         return jwtEncoder.setSubject(subject).compact();
     }
 
-    public boolean verify(String encoded, String subject) {
-        return jwtVerifier.parseClaimsJws(encoded).getBody().getSubject().equals(subject);
+    /**
+     * Verifies the jwt and returns the claims
+     *
+     * @param encoded The jwt string
+     * @return The claims or null if jwt was not valid
+     */
+    public Claims verify(String encoded) {
+        try {
+            return jwtVerifier.parseClaimsJws(encoded).getBody();
+        } catch (JwtException e) {
+            return null;
+        }
     }
 
     public static String toHex(byte[] data) {
