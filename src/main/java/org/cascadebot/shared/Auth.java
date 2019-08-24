@@ -31,8 +31,7 @@ public class Auth {
     }
 
     public String encode(String subject) {
-        jwtEncoder.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1)));
-        return jwtEncoder.setSubject(subject).compact();
+        return jwtEncoder.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1))).setSubject(subject).compact();
     }
 
     /**
