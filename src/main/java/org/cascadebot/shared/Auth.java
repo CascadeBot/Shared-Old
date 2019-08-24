@@ -16,6 +16,8 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Auth {
 
@@ -29,6 +31,7 @@ public class Auth {
     }
 
     public String encode(String subject) {
+        jwtEncoder.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1)));
         return jwtEncoder.setSubject(subject).compact();
     }
 
